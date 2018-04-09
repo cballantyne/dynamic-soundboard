@@ -1,21 +1,20 @@
-const electron = require('electron')
+const electron = require('electron');
 // Module to control application life.
-const app = electron.app
+const app = electron.app;
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
-const path = require('path')
+const path = require('path');
 const decompress = require('decompress');
-const url = require('url')
-const {ipcMain} = require('electron')
+const url = require('url');
+const {ipcMain} = require('electron');
 
 
-const {dialog} = require('electron')
-var fs = require('fs'); // Load the File System to execute our common tasks (CRUD)
+const {dialog} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
   // Create the browser window.
@@ -66,7 +65,7 @@ function loadFile() {
         }
         decompress(fileNames[0], 'dist').then(files => {
 
-            const folderWithFilesMap = files.reduce(function(acumulator, f) {
+            global.folderWithFilesMap = files.reduce(function(acumulator, f) {
 
                 const folder = f.path.split("/")[0];
 
@@ -82,19 +81,17 @@ function loadFile() {
                 return acumulator;
             }, new Map());
 
-            global.folderWithFilesMap = folderWithFilesMap;
             mainWindow.webContents.send('draw-tabs-and-buttons');
 
         }).catch(function (err) {
-                 console.log("Problem decompressing files.");
-                 console.log(err);
+                 console.log("Problem decompressing files.", err);
         });
     });
 }
 
 app.on('ready', () => {
     createWindow();
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -125,6 +122,6 @@ app.on('activate', function () {
   }
 });
 
-ipcMain.on('async-loadFile', (event) => {
+ipcMain.on('async-loadFile', () => {
     loadFile();
 });
