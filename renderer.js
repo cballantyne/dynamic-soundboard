@@ -34,14 +34,29 @@ ipc.on('draw-tabs-and-buttons', () => {
         const backgroundPath = './dist/' + key + '/background.png';
         let toAppend = '<div class="container fill" id="buttons-'+ key + '" style="background: url(\'' + backgroundPath + '\') no-repeat center;">';
 
+        let buttonCount = 0;
         value.forEach(x => {
+            buttonCount++;
             const buttonText = x.split("/")[1].split(".")[0]; // remove folder and file extension
-            toAppend = toAppend + '<div class="row">';
+            if (buttonCount === 1) {
+                toAppend = toAppend + '<div class="row">';
+            }
             toAppend = toAppend + '<div class="col-sm">';
             toAppend = toAppend + '<button class="play-sound" name="' + x + '">' + buttonText + '</button>';
             toAppend = toAppend + '</div>';
-            toAppend = toAppend + '</div>';
+
+            if (buttonCount === 3) {
+                toAppend = toAppend + '</div>';
+                buttonCount = 0;
+            }
         });
+
+        if (buttonCount > 0) {
+            toAppend = toAppend + '</div>';
+        }
+
+
+
         toAppend = toAppend + '</div>';
 
         $buttons.append(toAppend);
