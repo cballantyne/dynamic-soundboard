@@ -1,22 +1,17 @@
 {
-  "name": "electron-quick-start",
+  "name": "dymamic-soundboard",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A dyamic-soundboard Electron application",
   "main": "main.js",
   "scripts": {
-    "//": "C:\\\\Users\\\\Carl\\\\IdeaProjects\\\\electron-quick-start\\\\node_modules\\\\electron\\\\dist\\\\electron.exe .",
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/cballantyne/dynamic-soundboard",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "dyamic",
+    "soundboard"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
   "devDependencies": {
     "electron": "~1.8.2"
   },
