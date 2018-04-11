@@ -37,12 +37,12 @@ ipc.on('draw-tabs-and-buttons', () => {
         let buttonCount = 0;
         value.forEach(x => {
             buttonCount++;
-            const buttonText = x.split("/")[1].split(".")[0]; // remove folder and file extension
+            const buttonText = x.split("/")[1].split(".")[0].replace(/-/g, ' '); // remove folder and file extension. replace hyphen with space
             if (buttonCount === 1) {
-                toAppend = toAppend + '<div class="row">';
+                toAppend = toAppend + '<div class="row p-1">';
             }
             toAppend = toAppend + '<div class="col-sm">';
-            toAppend = toAppend + '<button class="play-sound" name="' + x + '">' + buttonText + '</button>';
+            toAppend = toAppend + '<button class="btn btn-primary text-truncate play-sound" name="' + x + '" title="' + buttonText + '">' + buttonText + '</button>';
             toAppend = toAppend + '</div>';
 
             if (buttonCount === 3) {
@@ -59,8 +59,10 @@ ipc.on('draw-tabs-and-buttons', () => {
 
         toAppend = toAppend + '</div>';
 
+
+        const tabText = key.replace(/-/g, ' ');
         $buttons.append(toAppend);
-        $tabsList.append('<li class="nav-item"><a class="nav-link" id="tab-' + key + '" href="#">' + key + '</a></li>');
+        $tabsList.append('<li class="nav-item"><a class="nav-link" id="tab-' + key + '" href="#">' + tabText + '</a></li>');
 
         if (index === folderWithFilesMap.size) {
             showTab(firstTab);
@@ -72,7 +74,7 @@ $buttons.on( "click", function(event) {
     console.log('click event');
     console.log(event);
 
-    if (event.target.className === 'play-sound') {
+    if (event.target.className.includes('play-sound')) {
         const audio = new Audio('./dist/' + event.target.name);
         //audio.loop = true
         audio.play().then(() => {
@@ -87,7 +89,7 @@ $buttons.on( "click", function(event) {
 $tabs.on( "click", function(event) {
     console.log(event);
     if (event.target.className === 'nav-link') {
-        showTab(event.target.innerText);
+        showTab(event.target.id.replace('tab-',''));
     }
 });
 

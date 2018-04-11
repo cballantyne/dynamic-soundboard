@@ -91,7 +91,7 @@ function loadFile() {
 
 app.on('ready', () => {
     createWindow();
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
